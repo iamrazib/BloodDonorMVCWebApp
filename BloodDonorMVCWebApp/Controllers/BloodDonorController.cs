@@ -25,7 +25,7 @@ namespace BloodDonorMVCWebApp.Controllers
             }
             if (!string.IsNullOrEmpty(v_address))
             {
-                query = query.Where(d => d.Address != null && d.Address.Contains(v_address, StringComparison.CurrentCultureIgnoreCase));
+                query = query.Where(d => d.Address != null && d.Address.Contains(v_address));
             }
             if (!string.IsNullOrEmpty(v_contact))
             {
@@ -34,7 +34,25 @@ namespace BloodDonorMVCWebApp.Controllers
 
             //var donors = _context.BloodDonors.ToList();
 
-            var donors = query.ToList();
+            //var donors = query.ToList();
+
+            var donors = query.Select(d => new BloodDonorListViewModel
+            {
+                Id = d.Id,
+                FullName = d.FullName,
+                ContactNumber = d.ContactNumber,
+                Age = DateTime.Now.Year - d.DateOfBirth.Year,
+                Email = d.Email,
+                BloodGroup = d.BloodGroup.ToString(),
+                LastDonationDate = d.LastDonationDate.HasValue ? $"{(DateTime.Today - d.LastDonationDate.Value).Days} days ago" : "Never",
+                Address = d.Address,
+                CreatedAt = d.CreatedAt.ToString("dd/MM/yyyy"),
+                UpdatedAt = d.UpdatedAt.HasValue ? d.UpdatedAt.ToString() : "",
+                ProfilePicture = d.ProfilePicture,
+                IsEligible = (d.weight > 45 && d.weight < 200) && (d.LastDonationDate == null || (DateTime.Now - d.LastDonationDate.Value).TotalDays >= 90)
+
+            }).ToList();
+
             return View(donors);
         }
 

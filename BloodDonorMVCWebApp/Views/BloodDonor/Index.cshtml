@@ -1,4 +1,4 @@
-﻿@model List<BloodDonorEntity>
+﻿@model List<BloodDonorListViewModel>
 
 @{
     ViewData["Title"] = "Blood Donor List";
@@ -17,10 +17,10 @@
         </select>
     </div>
     <div class="col-md-3">
-        <input type="text" name="address" class="form-control" placeholder="search by address" />
+        <input type="text" name="v_address" class="form-control" placeholder="search by address" />
     </div>
     <div class="col-md-3">
-        <input type="text" name="contactnumber" class="form-control" placeholder="search by contact" />
+        <input type="text" name="v_contact" class="form-control" placeholder="search by contact" />
     </div>
     <div class="col-md-3">
         <button type="submit" class="btn btn-primary w-100">Search</button>
@@ -36,8 +36,9 @@
             <th>Contact</th>
             <th>Email</th>
             <th>Address</th>
-            @* <th>Age</th>
-            <th>Last Donation</th>  *@           
+            <th>Age</th>
+            <th>Last Donation</th>  
+            <th>Eligibility</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -61,8 +62,18 @@
                 <td>@donor.ContactNumber</td>
                 <td>@donor.Email</td>
                 <td>@donor.Address</td>
-                @* <td>@donor.Age</td>
-                <td>@donor.LastDonation?.ToString("dd/MM/yyyy") ?? "N/A"</td> *@
+                <td>@donor.Age</td>
+                <td>@donor.LastDonationDate</td>
+                <td>
+                    @if (donor.IsEligible)
+                    {
+                        <span class="badge bg-success">Eligible</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger">Not Eligible</span>
+                    }
+                </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@donor.Id" class="btn btn-primary btn-sm">View</a>
                     <a asp-action="Edit" asp-route-id="@donor.Id" class="btn btn-primary btn-sm">Edit</a>

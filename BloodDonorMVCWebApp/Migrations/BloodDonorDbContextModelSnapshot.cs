@@ -71,7 +71,7 @@ namespace BloodDonorMVCWebApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BloodDonors");
+                    b.ToTable("BloodDonors", (string)null);
                 });
 
             modelBuilder.Entity("BloodDonorMVCWebApp.Models.Donation", b =>
@@ -98,7 +98,7 @@ namespace BloodDonorMVCWebApp.Migrations
 
                     b.HasIndex("BloodDonorEntityId");
 
-                    b.ToTable("Donations");
+                    b.ToTable("Donations", (string)null);
                 });
 
             modelBuilder.Entity("BloodDonorMVCWebApp.Models.Donation", b =>
