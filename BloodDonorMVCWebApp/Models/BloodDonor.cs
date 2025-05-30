@@ -20,8 +20,9 @@ namespace BloodDonorMVCWebApp.Models
         public required BloodGroupEnum BloodGroup { get; set; }
 
         [Range(50,150)]
+        [Display(Name ="Weight (Kg)")]
         public float weight { get; set; }
-        public DateTime LastDonationDate { get; set; }
+        public DateTime? LastDonationDate { get; set; }
         public string? Address { get; set; }
         public bool IsAvailableForDonation { get; set; } = true;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

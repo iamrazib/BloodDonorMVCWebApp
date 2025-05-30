@@ -1,67 +1,98 @@
-﻿@model BloodDonorMVCWebApp.Models.BloodDonorEntity
+﻿@model BloodDonorCreateViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Add Blood Donor";
 }
 
-<h4>Blood Donor Entity</h4>
+<h4>Add New Blood Donor Entity</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create" method="post">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @* <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div> *@
-            <div class="form-group">
-                <label asp-for="FullName" class="control-label"></label>
-                <input asp-for="FullName" class="form-control" />
-                <span asp-validation-for="FullName" class="text-danger"></span>
+            <div class="form-group row mb-2">
+                <label asp-for="FullName" class="control-label col-md-4 text-right">Full Name</label>
+                <div class="col-md-8">
+                    <input asp-for="FullName" class="form-control" />
+                    <span asp-validation-for="FullName" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="ContactNumber" class="control-label"></label>
-                <input asp-for="ContactNumber" class="form-control" />
-                <span asp-validation-for="ContactNumber" class="text-danger"></span>
+            <div class="form-group row mb-2">
+                <label asp-for="ContactNumber" class="control-label col-md-4 text-right">Contact Number</label>
+                <div class="col-md-8">
+                    <input asp-for="ContactNumber" class="form-control" />
+                    <span asp-validation-for="ContactNumber" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="DateOfBirth" class="control-label"></label>
-                <input asp-for="DateOfBirth" class="form-control" type="date" />
-                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+            <div class="form-group row mb-2">
+                <label asp-for="DateOfBirth" class="control-label col-md-4 text-right">Date of Birth</label>
+                <div class="col-md-8">
+                    <input asp-for="DateOfBirth" class="form-control" type="date" />
+                    <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+            <div class="form-group row mb-2">
+                <label asp-for="Email" class="control-label col-md-4 text-right">Email</label>
+                <div class="col-md-8">
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="BloodGroup" class="control-label"></label>
-                @Html.DropDownListFor(model => model.BloodGroup,
+            <div class="form-group row mb-2">
+                <label asp-for="BloodGroup" class="control-label col-md-4 text-right">Blood Group</label>
+                <div class="col-md-8">
+                    @* @Html.DropDownListFor(model => model.BloodGroup,
                     Enum.GetValues(typeof(BloodGroupEnum)).Cast<BloodGroupEnum>()
                         .Select(bg => new SelectListItem
                         {
                             Text = bg.ToString(),
                             Value = bg.ToString()
                         }),
-                         "Select Blood Group", new { @class = "form-control" })             
-                <span asp-validation-for="BloodGroup" class="text-danger"></span>
+                         "Select Blood Group", new { @class = "form-control" })  *@
+
+                    <select asp-for="BloodGroup" class="form-control">
+                        <option value="">---- Select Blood Group ----</option>
+                        @foreach (var group in Enum.GetValues(typeof(BloodGroupEnum)).Cast<BloodGroupEnum>())
+                        {
+                            <option value="@group">@group</option>
+                        }
+                    </select>
+
+                    @* <select asp-for="BloodGroup" class="form-control" asp-items="Html.GetEnumSelectList<BloodGroupEnum>()"></select> *@
+
+                    <span asp-validation-for="BloodGroup" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="weight" class="control-label"></label>
-                <input asp-for="weight" class="form-control" />
-                <span asp-validation-for="weight" class="text-danger"></span>
+            <div class="form-group row mb-2">
+                <label asp-for="weight" class="control-label col-md-4 text-right">Weight</label>
+                <div class="col-md-8">
+                    <input asp-for="weight" class="form-control" type="number" min="1" max="200" step="1" />
+                    <span asp-validation-for="weight" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="LastDonationDate" class="control-label"></label>
-                <input asp-for="LastDonationDate" class="form-control" type="datetime-local" />
-                <span asp-validation-for="LastDonationDate" class="text-danger"></span>
+            <div class="form-group row mb-2">
+                <label asp-for="LastDonationDate" class="control-label col-md-4 text-right">Last Donation Date</label>
+                <div class="col-md-8">
+                    <input asp-for="LastDonationDate" class="form-control" type="datetime-local" />
+                    <span asp-validation-for="LastDonationDate" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Address" class="control-label"></label>
-                <input asp-for="Address" class="form-control" />
-                <span asp-validation-for="Address" class="text-danger"></span>
+            <div class="form-group row mb-2">
+                <label asp-for="Address" class="control-label col-md-4 text-right">Address</label>
+                <div class="col-md-8">
+                    <input asp-for="Address" class="form-control" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
             </div>
+            <div class="form-group row mb-2">
+                <label asp-for="ProfilePicture" class="control-label col-md-4 text-right">ProfilePicture</label>
+                <div class="col-md-8">
+                    <input asp-for="ProfilePicture" class="form-control" type="file" accept="image/*" />
+                    <span asp-validation-for="ProfilePicture" class="text-danger"></span>
+                </div>
+            </div>
+
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="IsAvailableForDonation" /> @Html.DisplayNameFor(model => model.IsAvailableForDonation)
@@ -89,5 +120,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
