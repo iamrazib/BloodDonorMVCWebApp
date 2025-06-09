@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BloodDonorMVCWebApp.Models
+namespace BloodDonorMVCWebApp.Models.ViewModel
 {
     public class BloodDonorListViewModel
     {

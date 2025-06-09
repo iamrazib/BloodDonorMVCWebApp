@@ -1,4 +1,4 @@
-﻿using BloodDonorMVCWebApp.Models;
+﻿using BloodDonorMVCWebApp.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace BloodDonorMVCWebApp.Data

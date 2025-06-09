@@ -1,14 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 
-namespace BloodDonorMVCWebApp.Models
+namespace BloodDonorMVCWebApp.Models.Entities
 {
-    public class BloodDonorCreateViewModel
+    public class BloodDonorEntity
     {
-        [Required]
+        [Key]
+        public int Id { get; set; }
         public required string FullName { get; set; }
-
+        
         [Phone]
-        [Length(10, 15)]
+        [Length(10,15)]
         public required string ContactNumber { get; set; }
         public required DateTime DateOfBirth { get; set; }
 
@@ -16,14 +18,16 @@ namespace BloodDonorMVCWebApp.Models
         public required string Email { get; set; }
         public required BloodGroupEnum BloodGroup { get; set; }
 
-        [Range(50, 150)]
-        [Display(Name = "Weight (Kg)")]
+        [Range(50,150)]
+        [Display(Name ="Weight (Kg)")]
         public float weight { get; set; }
         public DateTime? LastDonationDate { get; set; }
         public string? Address { get; set; }
         public bool IsAvailableForDonation { get; set; } = true;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
-        public IFormFile? ProfilePicture { get; set; }
+        public string? ProfilePicture { get; set; }
+        public Collection<Donation> Donations { get; set; } = new Collection<Donation>();
     }
+    
 }
