@@ -48,25 +48,8 @@ namespace BloodDonorMVCWebApp.Controllers
             }
 
             ViewBag.Message = "Donor Created Successfully";
-
-            var donorEntity = new BloodDonorEntity
-            {
-                FullName = donor.FullName,
-                ContactNumber = donor.ContactNumber,
-                DateOfBirth = donor.DateOfBirth,
-                Email = donor.Email,
-                BloodGroup = donor.BloodGroup,
-                weight = donor.weight,
-                LastDonationDate = donor.LastDonationDate,
-                Address = donor.Address,
-                IsAvailableForDonation = donor.IsAvailableForDonation,
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = null, // Set to null initially
-                ProfilePicture = await _fileService.SaveFileAsync(donor.ProfilePicture)
-            };
-
-            //_context.BloodDonors.Add(donorEntity);
-            //_context.SaveChanges();
+            var donorEntity= _mapper.Map<BloodDonorEntity>(donor);
+            donorEntity.ProfilePicture = await _fileService.SaveFileAsync(donor.ProfilePicture);
 
             await _bloodDonorService.AddAsync(donorEntity);
 
@@ -76,54 +59,24 @@ namespace BloodDonorMVCWebApp.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            var donor = await _bloodDonorService.GetByIdAsync(id);// _context.BloodDonors.FirstOrDefault(d => d.Id == id);
+            var donor = await _bloodDonorService.GetByIdAsync(id);
             if(donor == null)
             {
                 return NotFound();
             }
 
             var donorViewModel = _mapper.Map<BloodDonorListViewModel>(donor);
-
-            //var donorViewModel = new BloodDonorListViewModel
-            //{
-            //    Id = donor.Id,
-            //    FullName = donor.FullName,
-            //    ContactNumber = donor.ContactNumber,
-            //    Age = DateTime.Now.Year - donor.DateOfBirth.Year,
-            //    Email = donor.Email,
-            //    BloodGroup = donor.BloodGroup.ToString(),
-            //    LastDonationDate = donor.LastDonationDate.HasValue ? $"{(DateTime.Today - donor.LastDonationDate.Value).Days} days ago" : "Never",
-            //    Address = donor.Address,
-            //    CreatedAt = donor.CreatedAt.ToString("dd/MM/yyyy"),
-            //    UpdatedAt = donor.UpdatedAt.HasValue ? donor.UpdatedAt.ToString() : "",
-            //    ProfilePicture = donor.ProfilePicture,
-            //    IsEligible = (donor.weight > 45 && donor.weight < 200) && (donor.LastDonationDate == null || (DateTime.Now - donor.LastDonationDate.Value).TotalDays >= 90)
-            //};
             return View(donorViewModel);
         }
 
         public async Task<IActionResult> EditAsync(int id)
         {
-            var donor = await _bloodDonorService.GetByIdAsync(id); //_context.BloodDonors.FirstOrDefault(d => d.Id == id);
+            var donor = await _bloodDonorService.GetByIdAsync(id); 
             if (donor == null)
             {
                 return NotFound();
             }
-            var donorViewModel = _mapper.Map<BloodDonorEditViewModel>(donor);
-            //var donorViewModel = new BloodDonorEditViewModel
-            //{
-            //    Id = donor.Id,
-            //    FullName = donor.FullName,
-            //    ContactNumber = donor.ContactNumber,
-            //    DateOfBirth=donor.DateOfBirth,
-            //    Email = donor.Email,
-            //    BloodGroup = donor.BloodGroup,
-            //    LastDonationDate = donor.LastDonationDate,
-            //    Address = donor.Address,
-            //    weight = donor.weight,
-            //    IsAvailableForDonation = donor.IsAvailableForDonation,
-            //    ExistingProfilePicture = donor.ProfilePicture,                
-            //};
+            var donorViewModel = _mapper.Map<BloodDonorEditViewModel>(donor);            
             return View(donorViewModel);
         }
 
@@ -151,7 +104,7 @@ namespace BloodDonorMVCWebApp.Controllers
                 ProfilePicture = await _fileService.SaveFileAsync(donor.ProfilePicture)
             };
 
-            var existingDonor = await _bloodDonorService.GetByIdAsync(donor.Id);// _context.BloodDonors.FirstOrDefaultAsync(d => d.Id == donor.Id);
+            var existingDonor = await _bloodDonorService.GetByIdAsync(donor.Id);
             if (existingDonor == null)
             {
                 throw new InvalidOperationException("Blood donor not found.");
@@ -181,20 +134,7 @@ namespace BloodDonorMVCWebApp.Controllers
             {
                 return NotFound();
             }
-            var donorViewModel = _mapper.Map<BloodDonorListViewModel>(donor);
-            //var donorViewModel = new BloodDonorListViewModel
-            //{
-            //    Id = donor.Id,
-            //    FullName = donor.FullName,
-            //    ContactNumber = donor.ContactNumber,
-            //    Age = DateTime.Now.Year - donor.DateOfBirth.Year,
-            //    Email = donor.Email,
-            //    BloodGroup = donor.BloodGroup.ToString(),
-            //    Address = donor.Address,
-            //    LastDonationDate = donor.LastDonationDate.HasValue ? $"{(DateTime.Today - donor.LastDonationDate.Value).Days} days ago" : "Never",
-            //    ProfilePicture = donor.ProfilePicture,
-            //    IsEligible = (donor.weight > 45 && donor.weight < 200) && (!donor.LastDonationDate.HasValue || (DateTime.Now - donor.LastDonationDate.Value).TotalDays >= 90)
-            //};
+            var donorViewModel = _mapper.Map<BloodDonorListViewModel>(donor);            
             return View(donorViewModel);
         }
 

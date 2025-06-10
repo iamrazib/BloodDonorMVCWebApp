@@ -1,6 +1,5 @@
 ﻿using BloodDonorMVCWebApp.Data.UnitOfWork;
 using BloodDonorMVCWebApp.Models.Entities;
-using BloodDonorMVCWebApp.Models.ViewModel;
 using BloodDonorMVCWebApp.Services.Interfaces;
 using BloodDonorMVCWebApp.Services.Model;
 using Microsoft.EntityFrameworkCore;
@@ -81,7 +80,6 @@ namespace BloodDonorMVCWebApp.Services.Implementations
             //}
 
             return await query.ToListAsync();
-
             //return donors;
         }
 
